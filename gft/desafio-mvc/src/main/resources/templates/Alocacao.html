@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html
+  lang="pt-BR"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{LayoutPadrao}"
+>
+  <head>
+    <title>Alocação</title>
+  </head>
+
+  <body>
+    <section layout:fragment="conteudo">
+      <h1 class="text-center my-3">Alocação de Funcionário</h1>
+
+      <form action="" method="POST" th:object="${alocacao}">
+        <div th:replace="parts/MensagemGeral"></div>
+        <div th:replace="parts/MensagemErro"></div>
+
+        <div class="form-group">
+          <select
+            th:field="*{funcionario}"
+            id="funcionario"
+            class="custom-select"
+            required
+          >
+            <option
+              th:value="null"
+              th:text="${#lists.isEmpty(funcionarios)} ? 'Nenhum funcionário encontrado' : 'Selecione um funcionário'"
+            ></option>
+            <option
+              th:each="funcionario : ${funcionarios}"
+              th:value="${funcionario.id}"
+              th:text="${funcionario.nome}"
+              th:attr="data-unidade=${funcionario.localDeTrabalho.nome}, data-cargo=${funcionario.cargo.descricao}, data-tecnologias=${{funcionario.tecnologias}}, data-level=${funcionario.level.nome}"
+            ></option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <select th:field="*{vaga}" id="vaga" class="custom-select" required>
+            <option
+              th:value="null"
+              th:text="${#lists.isEmpty(vagas)} ? 'Nenhuma vaga encontrada' : ' Selecione uma vaga'"
+            ></option>
+            <option
+              th:each="vaga : ${vagas}"
+              th:value="${vaga.id}"
+              th:text="${vaga.descricaoVaga}"
+              th:attr="data-projeto=${vaga.projeto}, data-codigo=${vaga.codigoVaga}, data-tecnologias=${{vaga.tecnologias}}, data-level=${vaga.level.nome}"
+            ></option>
+          </select>
+        </div>
+
+        <div
+          class="d-flex flex-column flex-md-row justify-content-around align-items-center"
+          id="alocacao-div"
+        >
+          <div
+            class="card bg-light mb-3 font-weight-bold w-75 w-25-md"
+            id="f-card"
+          >
+            <div class="card-header text-center">
+              <h2>
+                <i class="fas fa-user-circle"></i>
+              </h2>
+              <span id="f-nome"></span>
+            </div>
+            <div class="card-body">
+              <p>
+                <strong>Unidade:</strong>
+                <span id="f-unidade" class="font-weight-normal"> </span>
+              </p>
+              <p>
+                <strong>Cargo:</strong>
+                <span class="font-weight-normal" id="f-cargo"></span>
+              </p>
+              <p>
+                <strong>Level: </strong>
+                <span class="font-weight-normal" id="f-level"></span>
+              </p>
+              <p>
+                <strong>Tecnologias:</strong>
+                <span class="font-weight-normal" id="f-tecnologias"></span>
+              </p>
+            </div>
+          </div>
+
+          <div class="text-center font-weight-bold h2" id="alocar-icon">
+            <i id="icon" class="fas fa-arrow-circle-right"></i>
+            <p>Alocar</p>
+          </div>
+
+          <div class="card bg-light mb-3 font-weight-bold w-75" id="v-card">
+            <div class="card-header text-center">
+              <h2>
+                <i class="fas fa-house-user"></i>
+              </h2>
+              <span id="v-projeto"></span>
+            </div>
+            <div class="card-body">
+              <p>
+                <strong>Código da Vaga:</strong>
+                <span class="font-weight-normal" id="v-codigo"></span>
+              </p>
+              <p>
+                <strong>Descrição:</strong>
+                <span class="font-weight-normal" id="v-descricao"> </span>
+              </p>
+
+              <p>
+                <strong>Level:</strong>
+                <span class="font-weight-normal" id="v-level"> </span>
+              </p>
+
+              <p>
+                <strong>Tecnologias:</strong>
+                <span class="font-weight-normal" id="v-tecnologias"> </span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center my-3">
+          <button class="btn btn-primary" type="submit">Alocar</button>
+        </div>
+      </form>
+
+      <table id="tecnologias" class="d-none">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="tecnologia : ${tecnologias}">
+            <td th:text="${tecnologia.id}"></td>
+            <td th:text="${tecnologia.nome}"></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </body>
+</html>

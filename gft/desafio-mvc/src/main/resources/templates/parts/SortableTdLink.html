@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html
+  lang="pt-BR"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+  <th th:fragment="th(sort, text)">
+    <a
+      th:href="@{/wa/{rotaAtual}(page=${paginaAtual}, sort=${sort},asc, size=${param.size}, rotaAtual=${rotaAtual})}"
+    >
+      <span th:text="${text}"></span>
+      <i
+        class="fas fa-chevron-down text-primary d-none"
+        th:classappend="${#strings.equals(param.sort, sort)} ? d-inline"
+      ></i>
+    </a>
+  </th>
+</html>

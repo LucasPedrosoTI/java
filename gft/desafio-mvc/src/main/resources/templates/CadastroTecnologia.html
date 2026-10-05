@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html
+  lang="pt-BR"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{LayoutPadrao}"
+>
+  <head>
+    <title>Tecnologias</title>
+  </head>
+
+  <section layout:fragment="conteudo">
+    <h1 class="text-center my-3">Cadastro de Tecnologia</h1>
+
+    <form action="cadastrar" method="POST" th:object="${tecnologia}">
+      <div th:replace="parts/MensagemGeral"></div>
+      <div th:replace="parts/MensagemErro"></div>
+
+      <input type="hidden" th:field="*{id}" />
+
+      <div class="form-group">
+        <label for="nome">Nome</label>
+        <input
+          th:field="*{nome}"
+          type="text"
+          class="form-control"
+          id="nome"
+          th:classappend="${#fields.hasErrors('nome')} ? is-invalid"
+        />
+      </div>
+
+      <div class="d-flex my-3">
+        <button class="btn btn-primary mx-auto" type="submit">Salvar</button>
+      </div>
+    </form>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title text-center">Techs já disponíveis</h5>
+        <ul class="row">
+          <li
+            class="card-text badge badge-info m-1 d-flex"
+            th:each="tecnologia : ${tecnologias}"
+          >
+            <span
+              class="d-flex align-items-center mr-1"
+              th:text="${tecnologia.nome}"
+            ></span>
+
+            <form
+              th:action="@{/wa/tecnologias/{id}(id = ${tecnologia.id})}"
+              th:method="delete"
+            >
+              <button type="submit" class="btn btn-sm card-text p-0">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </form>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</html>

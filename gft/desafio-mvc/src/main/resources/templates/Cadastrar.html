@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html
+  lang="pt-BR"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{LayoutPadrao}"
+>
+  <head>
+    <title>Cadastrar</title>
+    <script src="/js/validatePassword.js" defer></script>
+  </head>
+
+  <section layout:fragment="conteudo">
+    <h1>Cadastrar</h1>
+
+    <form
+      id="form"
+      th:action="@{/cadastrar}"
+      method="post"
+      th:object="${usuario}"
+    >
+      <div th:replace="parts/MensagemErro"></div>
+      <input type="hidden" th:field="*{id}" />
+
+      <p class="form-group">
+        <label for="email">E-mail</label>:
+        <input
+          placeholder="Digite seu e-mail GFT: email@gft.com"
+          class="form-control"
+          type="email"
+          id="email"
+          autofocus="autofocus"
+          required="required"
+          th:field="*{email}"
+          th:classappend="${#fields.hasErrors('email')} ? is-invalid"
+        />
+      </p>
+      <div class="form-group" id="show_hide_password">
+        <label for="password">Senha</label>:
+        <div class="input-group">
+          <input
+            placeholder="Digite uma senha"
+            class="form-control"
+            type="password"
+            id="password"
+            th:field="*{senha}"
+            required
+            th:classappend="${#fields.hasErrors('senha')} ? is-invalid"
+            aria-describedby="button-addon"
+          />
+          <div class="input-group-append">
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              id="button-addon"
+            >
+              <i class="fa fa-eye-slash" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group" id="show_hide_confirm_password">
+        <label class="control-label" for="senha-confirmacao"
+          >Confirme a Senha:</label
+        >
+        <div class="input-group">
+          <input
+            class="l-form-password form-control"
+            type="password"
+            name="senha-confirmacao"
+            placeholder="Confirme Senha"
+            id="senha-confirmacao"
+            aria-describedby="button-addon2"
+            required
+          />
+          <div class="input-group-append">
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              id="button-addon2"
+            >
+              <i class="fa fa-eye-slash" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="custom-control custom-switch my-3">
+        <input
+          type="checkbox"
+          class="custom-control-input"
+          id="isAdmin"
+          th:field="*{admin}"
+          th:classappend="${#fields.hasErrors('admin')} ? is-invalid"
+        />
+        <label class="custom-control-label" for="isAdmin">Admin</label>
+      </div>
+
+      <div id="mensagem" style="display: none">
+        <h5>Senha deve conter o seguinte:</h5>
+        <div>
+          <p id="letter" class="invalid">Uma letra <b>minúscula</b></p>
+          <p id="capital" class="invalid">Uma letra <b>maiúscula</b></p>
+          <p id="number" class="invalid">Um <b>número</b></p>
+          <p id="length" class="invalid">Mínimo <b>8 caracteres</b></p>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" type="submit">Cadastrar</button>
+      <a href="/login" class="btn btn-danger">Cancelar</a>
+    </form>
+  </section>
+</html>

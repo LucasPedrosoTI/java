@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html
+  lang="pt-BR"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+  <div
+    class="card bg-light mb-3 font-weight-bold w-25"
+    th:fragment="card(header, icon, data, link)"
+    th:with="color=${color} ?: 'text-primary'"
+    th:classappend="${color}"
+  >
+    <div class="card-header">
+      <a th:href="@{/wa/{link}(link = ${link})}" th:text="${header}"></a>
+    </div>
+    <div class="card-body">
+      <h2
+        class="card-title d-flex justify-content-between align-items-center px-3"
+      >
+        <i class="fas" th:classappend="${icon}"></i>
+
+        <span class="card-text font-weight-bold" th:text="${data}"></span>
+      </h2>
+    </div>
+  </div>
+</html>

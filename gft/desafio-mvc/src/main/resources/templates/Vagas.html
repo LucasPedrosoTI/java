@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html
+  lang="pt-BR"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{LayoutPadrao}"
+>
+  <head>
+    <title>Vagas</title>
+  </head>
+
+  <body>
+    <section layout:fragment="conteudo">
+      <div th:replace="parts/MensagemGeral"></div>
+
+      <h1 class="text-center my-3">Vagas em Aberto</h1>
+
+      <div th:replace="parts/FiltroBusca"></div>
+
+      <table
+        class="table table-hover table-striped text-center table-responsive-md"
+      >
+        <thead>
+          <tr>
+            <th
+              th:replace="parts/SortableTdLink :: th(sort='projeto', text='Projeto')"
+            >
+              Projeto
+            </th>
+            <th
+              th:replace="parts/SortableTdLink :: th(sort='descricaoVaga', text='Descrição vaga')"
+            >
+              Descrição vaga
+            </th>
+            <th
+              th:replace="parts/SortableTdLink :: th(sort='level', text='Level')"
+            >
+              Level
+            </th>
+            <th>Tecnologias</th>
+            <th
+              th
+              th:replace="parts/SortableTdLink :: th(sort='dataDeAbertura', text='Abertura da Vaga')"
+            >
+              Abertura da Vaga
+            </th>
+            <th
+              th:replace="parts/SortableTdLink :: th(sort='qtdVagas', text='Qtd Vagas')"
+            >
+              Qtd Vagas
+            </th>
+            <th
+              th:replace="parts/SortableTdLink :: th(sort='codigoVaga', text='Código da vaga')"
+            >
+              Código da vaga
+            </th>
+            <th sec:authorize="hasRole('ADMIN')"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="vaga : ${vagas}">
+            <td th:text="${vaga.projeto}"></td>
+
+            <td th:text="${vaga.descricaoVaga}"></td>
+
+            <td th:text="${vaga.level.nome}"></td>
+
+            <td>
+              <strong th:if="${#lists.isEmpty(vaga.tecnologias)}"
+                >Nenhuma tecnologia cadastrada</strong
+              >
+              <ul class="row">
+                <li class="col-md-6" th:each="tecnologia : ${vaga.tecnologias}">
+                  <span class="badge badge-info" th:text="${tecnologia.nome}">
+                  </span>
+                </li>
+              </ul>
+            </td>
+
+            <td th:text="${{vaga.dataDeAbertura}}"></td>
+
+            <td th:text="${{vaga.qtdVagas}}"></td>
+
+            <td th:text="${{vaga.codigoVaga}}"></td>
+
+            <td
+              sec:authorize="hasRole('ADMIN')"
+              class="text-center d-flex justify-content-around"
+            >
+              <a
+                class="btn btn-link"
+                th:href="@{/wa/{rotaAtual}/{id}(id=${vaga.id}, rotaAtual = ${rotaAtual})}"
+                title="Editar"
+                rel="tooltip"
+                data-placement="top"
+              >
+                <i class="fas fa-pencil-alt"></i>
+              </a>
+
+              <a
+                class="btn btn-link"
+                data-toggle="modal"
+                data-target="#confirmacaoExclusaoModal"
+                th:attr="data-id=${vaga.id}, data-nome=${vaga.descricaoVaga}"
+                title="Excluir"
+                rel="tooltip"
+                data-placement="top"
+              >
+                <i class="fas fa-trash-alt"></i>
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="7" th:if="${#lists.isEmpty(vagas)}">
+              Nenhuma vaga foi encontrada
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div th:replace="parts/AdminNavInferior"></div>
+    </section>
+  </body>
+</html>

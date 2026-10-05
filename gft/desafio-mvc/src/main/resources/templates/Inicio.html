@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html
+  lang="pt-BR"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{LayoutPadrao}"
+>
+  <head>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="/js/chart.js"></script>
+    <title>Gerenciador de Funcionários em WA</title>
+  </head>
+
+  <body>
+    <section layout:fragment="conteudo">
+      <div class="container h-100">
+        <h5 class="my-4">Dashboard - Gerenciador de Funcionários em WA</h5>
+        <div class="d-flex justify-content-around">
+          <div
+            th:replace="parts/DashboardCard :: card(header='Funcionários', icon='fa-user-clock', data=${qtdFuncionariosEmWA}, link='funcionarios')"
+          ></div>
+
+          <div
+            th:replace="parts/DashboardCard :: card(header='Vagas', icon='fa-list-alt', data=${qtdVagas}, link='vagas', color='text-info')"
+          ></div>
+
+          <div
+            th:replace="parts/DashboardCard :: card(header='Alocados últimos 7 dias', icon='fa-calendar-check', data=${qtsAlocados7Dias}, link='alocacao', color='text-success')"
+          ></div>
+        </div>
+        <div id="funcionarios-termino-wa" class="my-4"></div>
+        <div id="vagas"></div>
+        <div class="d-flex justify-content-center my-3">
+          <a href="/wa/funcionarios" class="btn btn-primary w-25">Iniciar</a>
+        </div>
+      </div>
+    </section>
+
+    <script></script>
+  </body>
+</html>

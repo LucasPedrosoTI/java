@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html
+  lang="pt-BR"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{LayoutPadrao}"
+>
+  <head>
+    <title>Funcionários</title>
+  </head>
+
+  <body>
+    <section layout:fragment="conteudo">
+      <div th:replace="parts/MensagemGeral"></div>
+
+      <h1 class="text-center my-3">Funcionários em WA</h1>
+
+      <div th:replace="parts/FiltroBusca"></div>
+
+      <table
+        class="table table-hover table-striped text-center table-responsive-md"
+      >
+        <thead>
+          <tr>
+            <th
+              th:replace="parts/SortableTdLink :: th(sort='nome', text='Nome')"
+            ></th>
+
+            <th
+              th:replace="parts/SortableTdLink :: th(sort='cargo', text='Cargo')"
+            ></th>
+
+            <th
+              th:replace="parts/SortableTdLink :: th(sort='level', text='Level')"
+            >
+              Level
+            </th>
+
+            <th>Tecnologias</th>
+
+            <th
+              th:replace="parts/SortableTdLink :: th(sort='inicioWa', text='Início WA')"
+            >
+              Inicio WA
+            </th>
+
+            <th
+              th:replace="parts/SortableTdLink :: th(sort='terminoWa', text='Término WA')"
+            >
+              Previsão término WA
+            </th>
+
+            <th sec:authorize="hasRole('ADMIN')"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="funcionario : ${funcionarios}">
+            <td th:text="${funcionario.nome}"></td>
+
+            <td th:text="${funcionario.cargo.descricao}"></td>
+
+            <td th:text="${funcionario.level.nome}"></td>
+
+            <td>
+              <strong th:if="${#lists.isEmpty(funcionario.tecnologias)}"
+                >Nenhuma tecnologia cadastrada</strong
+              >
+              <ul class="row">
+                <li
+                  class="col-md-6"
+                  th:each="tecnologia : ${funcionario.tecnologias}"
+                >
+                  <span class="badge badge-info" th:text="${tecnologia.nome}">
+                  </span>
+                </li>
+              </ul>
+            </td>
+
+            <td th:text="${{funcionario.inicioWa}}"></td>
+
+            <td th:text="${{funcionario.terminoWa}}"></td>
+
+            <td
+              sec:authorize="hasRole('ADMIN')"
+              class="text-center d-flex justify-content-around"
+            >
+              <a
+                class="btn btn-link"
+                th:href="@{/wa/{rotaAtual}/{id}(id=${funcionario.id}, rotaAtual = ${rotaAtual})}"
+                title="Editar"
+                rel="tooltip"
+                data-placement="top"
+              >
+                <i class="fas fa-pencil-alt"></i>
+              </a>
+
+              <a
+                class="btn btn-link"
+                data-toggle="modal"
+                data-target="#confirmacaoExclusaoModal"
+                th:attr="data-id=${funcionario.id}, data-nome=${funcionario.nome}"
+                title="Excluir"
+                rel="tooltip"
+                data-placement="top"
+              >
+                <i class="fas fa-trash-alt"></i>
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="6" th:if="${#lists.isEmpty(funcionarios)}">
+              Nenhum funcionário foi encontrado
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div th:replace="parts/AdminNavInferior"></div>
+    </section>
+  </body>
+</html>

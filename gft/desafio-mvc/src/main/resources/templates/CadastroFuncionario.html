@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html
+  lang="pt-BR"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{LayoutPadrao}"
+>
+  <head>
+    <title>Funcionários</title>
+  </head>
+
+  <section layout:fragment="conteudo">
+    <h1 class="text-center my-3">Cadastro de Funcionário</h1>
+
+    <form action="cadastrar" method="POST" th:object="${funcionario}">
+      <div th:replace="parts/MensagemGeral"></div>
+      <div th:replace="parts/MensagemErro"></div>
+
+      <input type="hidden" th:field="*{id}" />
+
+      <input type="hidden" th:field="*{terminoWa}" />
+      <div class="form-group">
+        <label for="matricula">Matrícula</label>
+        <input
+          th:field="*{matricula}"
+          type="text"
+          class="form-control"
+          id="matricula"
+          th:classappend="${#fields.hasErrors('matricula')} ? is-invalid"
+          autofocus
+        />
+      </div>
+      <div class="form-group">
+        <label for="nome">Nome</label>
+        <input
+          th:field="*{nome}"
+          type="text"
+          class="form-control"
+          id="nome"
+          th:classappend="${#fields.hasErrors('nome')} ? is-invalid"
+        />
+      </div>
+      <div class="form-group">
+        <label for="cargo">Cargo</label>
+        <select
+          th:field="*{cargo}"
+          class="custom-select"
+          id="cargo"
+          th:classappend="${#fields.hasErrors('cargo')} ? is-invalid"
+        >
+          <option
+            th:each="cargo : ${cargos}"
+            th:value="${cargo}"
+            th:text="${cargo.descricao}"
+          ></option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="level">Level</label>
+        <select
+          th:field="*{level}"
+          class="custom-select"
+          id="level"
+          th:classappend="${#fields.hasErrors('level')} ? is-invalid"
+        >
+          <option
+            th:each="level : ${levels}"
+            th:value="${level.id}"
+            th:text="${level.nome}"
+          ></option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="localDeTrabalho">Local De Trabalho</label>
+        <select
+          th:field="*{localDeTrabalho}"
+          class="custom-select"
+          id="localDeTrabalho"
+          th:classappend="${#fields.hasErrors('localDeTrabalho')} ? is-invalid"
+        >
+          <option
+            th:each="localDeTrabalho : ${locais}"
+            th:value="${localDeTrabalho.id}"
+            th:text="${localDeTrabalho.nome}"
+          ></option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="inicioWa">Data de Início</label>
+        <div>
+          <input
+            type="text"
+            th:field="*{inicioWa}"
+            id="inicioWa"
+            class="form-control"
+            th:classappend="${#fields.hasErrors('inicioWa')} ? is-invalid"
+            data-provide="datepicker"
+            data-date-format="dd/mm/yyyy"
+            data-date-language="pt-BR"
+            data-date-autoclose="true"
+            data-date-today-highlight="true"
+          />
+        </div>
+      </div>
+
+      <ul class="row">
+        <li
+          class="col-6 col-md-4 col-xl-3 my-1"
+          th:each="tecnologia : ${tecnologias}"
+        >
+          <div class="custom-control custom-switch">
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              th:id="${tecnologia.nome}"
+              th:field="*{tecnologias}"
+              th:value="${tecnologia.id}"
+              th:classappend="${#fields.hasErrors('tecnologias')} ? is-invalid"
+            />
+            <label
+              class="custom-control-label"
+              th:for="${tecnologia.nome}"
+              th:text="${tecnologia.nome}"
+            ></label>
+          </div>
+        </li>
+      </ul>
+      <div class="d-flex my-3">
+        <button class="btn btn-primary mx-auto" type="submit">Salvar</button>
+      </div>
+    </form>
+  </section>
+</html>

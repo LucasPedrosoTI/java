@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html
+  lang="pt-BR"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{LayoutPadrao}"
+>
+  <head>
+    <title>Unidades</title>
+  </head>
+
+  <section layout:fragment="conteudo">
+    <h1 class="text-center my-3">Cadastro de Unidade</h1>
+
+    <form action="cadastrar" method="POST" th:object="${unidadeGFT}">
+      <div th:replace="parts/MensagemGeral"></div>
+      <div th:replace="parts/MensagemErro"></div>
+
+      <input type="hidden" th:field="*{id}" />
+
+      <div class="form-group">
+        <label for="nome">Nome</label>
+        <input
+          autofocus
+          required
+          th:field="*{nome}"
+          type="text"
+          class="form-control"
+          id="nome"
+          th:classappend="${#fields.hasErrors('nome')} ? is-invalid"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="cep">CEP</label>
+        <input
+          th:field="*{cep}"
+          type="text"
+          class="form-control"
+          id="cep"
+          th:classappend="${#fields.hasErrors('cep')} ? is-invalid"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="cidade">Cidade</label>
+        <input
+          required
+          th:field="*{cidade}"
+          type="text"
+          class="form-control"
+          id="cidade"
+          th:classappend="${#fields.hasErrors('cidade')} ? is-invalid"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="estado">Estado</label>
+        <input
+          required
+          th:field="*{estado}"
+          type="text"
+          class="form-control"
+          id="estado"
+          th:classappend="${#fields.hasErrors('estado')} ? is-invalid"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="endereco">Endereço</label>
+        <input
+          required
+          th:field="*{endereco}"
+          type="text"
+          class="form-control"
+          id="endereco"
+          th:classappend="${#fields.hasErrors('endereco')} ? is-invalid"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="telefone">Telefone</label>
+        <input
+          required
+          th:field="*{telefone}"
+          type="text"
+          class="form-control"
+          id="telefone"
+          th:classappend="${#fields.hasErrors('telefone')} ? is-invalid"
+        />
+      </div>
+
+      <div class="d-flex my-3">
+        <button class="btn btn-primary mx-auto" type="submit">Salvar</button>
+      </div>
+    </form>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title text-center">Unidade já cadastradas</h5>
+        <ul class="row">
+          <li
+            class="card-text badge badge-info m-1 d-flex"
+            th:each="unidade : ${unidades}"
+          >
+            <span
+              class="d-flex align-items-center mr-1"
+              th:text="${unidade.nome}"
+            ></span>
+
+            <form
+              th:action="@{/wa/unidades/{id}(id = ${unidade.id})}"
+              th:method="delete"
+            >
+              <button type="submit" class="btn btn-sm card-text p-0">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </form>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</html>

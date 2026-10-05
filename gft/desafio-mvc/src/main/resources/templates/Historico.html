@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html
+  lang="pt-BR"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{LayoutPadrao}"
+>
+  <head>
+    <title>Histórico</title>
+  </head>
+
+  <body>
+    <section layout:fragment="conteudo">
+      <h1 class="text-center my-3">Histórico</h1>
+
+      <div th:replace="parts/FiltroBusca"></div>
+
+      <table
+        class="table table-hover table-striped text-center table-responsive-md"
+      >
+        <thead>
+          <tr>
+            <th
+              th:replace="parts/SortableTdLink :: th(sort='nome', text='Funcionário')"
+            >
+              Funcionário
+            </th>
+            <th
+              th:replace="parts/SortableTdLink :: th(sort='alocacao.projeto', text='Projeto')"
+            >
+              Projeto
+            </th>
+            <th
+              th:replace="parts/SortableTdLink :: th(sort='alocacao.codigoVaga', text='Código da Vaga')"
+            >
+              Código da Vaga
+            </th>
+            <th
+              th:replace="parts/SortableTdLink :: th(sort='inicioWa', text='Início WA')"
+            >
+              Início WA
+            </th>
+            <th
+              th:replace="parts/SortableTdLink :: th(sort='dataDeAlocacao', text='Data de Alocação')"
+            >
+              Início Alocação
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="funcionario : ${funcionarios}">
+            <td th:text="${funcionario.nome}"></td>
+
+            <td th:text="${funcionario.alocacao.projeto}"></td>
+
+            <td th:text="${funcionario.alocacao.codigoVaga}"></td>
+
+            <td th:text="${{funcionario.inicioWa}}"></td>
+
+            <td th:text="${{funcionario.dataDeAlocacao}}"></td>
+          </tr>
+          <tr>
+            <td colspan="5" th:if="${#lists.isEmpty(funcionarios)}">
+              Nenhum funcionário foi encontrado
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </body>
+</html>

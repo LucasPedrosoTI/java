@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html
+  lang="pt-BR"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{LayoutPadrao}"
+>
+  <head>
+    <title>Login</title>
+  </head>
+
+  <section layout:fragment="conteudo">
+    <h1>Login</h1>
+    <form th:action="@{/login}" method="post">
+      <p class="form-group">
+        <label for="email">Email</label>:
+        <input
+          class="form-control"
+          type="text"
+          id="email"
+          name="email"
+          autofocus="autofocus"
+          th:classappend="${param.erro} ? is-invalid"
+        />
+      </p>
+      <p>
+        <label for="senha">Senha</label>:
+        <input
+          class="form-control"
+          type="password"
+          id="senha"
+          name="senha"
+          th:classappend="${param.erro} ? is-invalid"
+        />
+      </p>
+      <button class="btn btn-primary" type="submit">Entrar</button>
+      <a class="btn btn-link" href="/cadastrar">Cadastrar</a>
+    </form>
+
+    <div
+      class="alert alert-danger mt-3"
+      role="alert"
+      th:classappend="${param.erro} ? is-invalid"
+      th:if="${param.erro}"
+    >
+      E-mail ou senha inválido
+
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="alert alert-success mt-3" role="alert" th:if="${param.logout}">
+      Você saiu com sucesso.
+
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </section>
+</html>

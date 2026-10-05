@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">
+    <img src="/img/gft-logo.png" class="d-inline-block align-top" alt="GFT logo" loading="lazy" width="10%" />
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado"
+    aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" th:classappend="${menuInicio} ? active">
+        <a class="nav-link" href="/">Início</a>
+      </li>
+      <li class="nav-item" th:classappend="${menuFuncionarios} ? active">
+        <a class="nav-link" href="/wa/funcionarios">Funcionários</a>
+      </li>
+      <li class="nav-item" th:classappend="${menuVagas} ? active">
+        <a class="nav-link" href="/wa/vagas">Vagas</a>
+      </li>
+      <div sec:authorize="hasRole('ADMIN')" class="d-lg-flex">
+        <li class="nav-item" th:classappend="${menuAlocacao} ? active">
+          <a class="nav-link" href="/wa/alocacao">Alocação</a>
+        </li>
+
+        <li class="nav-item" th:classappend="${menuHistorico} ? active">
+          <a class="nav-link" href="/wa/historico">Histórico</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-plus-square"></i>
+          </a>
+
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/wa/tecnologias/cadastrar">Nova Tecnologia</a>
+            <a class="dropdown-item" href="/wa/unidades/cadastrar">Nova Unidade</a>
+            <a class="dropdown-item" href="/wa/funcionarios/cadastrar">Novo Funcionário</a>
+            <a class="dropdown-item" href="/wa/vagas/cadastrar">Nova Vaga</a>
+          </div>
+        </li>
+      </div>
+      <div sec:authorize="isAuthenticated()">
+      <li class="nav-item">
+        <form th:action="@{/logout}" method="post">
+          <button class="btn nav-link" type="submit" title="Sair"
+          rel="tooltip">
+            <i class="fas fa-sign-out-alt"></i>
+          </button>
+        </form>
+      </li>
+    </div>
+    </ul>
+</nav>
+
+</html>
