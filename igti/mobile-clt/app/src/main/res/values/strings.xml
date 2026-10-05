@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">igti-clt</string>
+    <string name="real">R$</string>
+    <string name="salario_bruto">Salário Bruto</string>
+    <string name="outros_descontos">Outros Descontos</string>
+    <string name="title">Calculadora de Salário Líquido</string>
+    <string name="calcular">Calcular</string>
+    <string name="sal_liquido">Salário Líquido</string>
+    <string name="descontos">Descontos</string>
+    <string name="voltar">Voltar</string>
+</resources>
