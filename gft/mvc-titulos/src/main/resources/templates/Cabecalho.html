@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html
+  lang="pt-BR"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/titulos">
+      <img
+        src="/img/gft-logo.png"
+        class="d-inline-block align-top"
+        alt="GFT logo"
+        loading="lazy"
+        width="10%"
+      />
+    </a>
+
+    <ul
+      th:if="${#httpServletRequest.remoteUser != null}"
+      class="navbar-nav flex-row align-items-center"
+    >
+      <li class="nav-item mx-3" th:inline="text">
+        Olá [[${#httpServletRequest.remoteUser}]]!
+      </li>
+      <li class="nav-item">
+        <form th:action="@{/logout}" method="post">
+          <button class="btn nav-link" type="submit">Sair</button>
+        </form>
+      </li>
+    </ul>
+  </nav>
+</html>
